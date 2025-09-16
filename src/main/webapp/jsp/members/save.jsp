@@ -26,7 +26,8 @@
 <ul>
   <li>id=<%member.getId()%></li>
   <li>username=<%member.getUsername()%></li>
-  <li>username=<%member.getAge()%></li>
+  <li>age=<%member.getAge()%></li>
 </ul>
+<a href="/index.html">메인</a>
 </body>
 </html>
