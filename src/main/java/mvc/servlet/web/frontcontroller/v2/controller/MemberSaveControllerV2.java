@@ -1,12 +1,10 @@
 package mvc.servlet.web.frontcontroller.v1.controller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mvc.servlet.domain.member.Member;
 import mvc.servlet.domain.member.MemberRepository;
-import mvc.servlet.web.frontcontroller.MyView;
 import mvc.servlet.web.frontcontroller.v1.ControllerV1;
 
 import java.io.IOException;
@@ -24,11 +22,24 @@ public class MemberSaveControllerV1 implements ControllerV1 {
         Member member = new Member(username, age);
         memberRepository.save(member);
 
-        req.setAttribute("member", member);
+        resp.setContentType("text/html");
+        resp.setCharacterEncoding("utf-8");
 
-        String viewPath = "/WEB-INF/views/save-result.jsp";
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher(viewPath);
-        dispatcher.forward(req, resp);
+        PrintWriter w = resp.getWriter();
+        w.write("<html>\n" +
+                "<head>\n" +
+                " <meta charset=\"UTF-8\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "성공\n" +
+                "<ul>\n" +
+                " <li>id="+member.getId()+"</li>\n" +
+                " <li>username="+member.getUsername()+"</li>\n" +
+                " <li>age="+member.getAge()+"</li>\n" +
+                "</ul>\n" +
+                "<a href=\"/index.html\">메인</a>\n" +
+                "</body>\n" +
+                "</html>");
+    }
     }
 }
