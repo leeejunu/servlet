@@ -9,21 +9,17 @@ import mvc.servlet.web.frontcontroller.MyView;
 import mvc.servlet.web.frontcontroller.v2.ControllerV2;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
-public class MemberSaveControllerV2 implements ControllerV2 {
+public class MemberListControllerV2 implements ControllerV2 {
 
     private MemberRepository memberRepository = MemberRepository.getInstance();
-
     @Override
-    public MyView process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        int age = Integer.parseInt(req.getParameter("age"));
+    public MyView process(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServletException, IOException {
+        String viewPath = "/WEB-INF/views/new-form.jsp";
 
-        Member member = new Member(username, age);
-        memberRepository.save(member);
-
-        String viewPath = "/WEB-INF/views/save-result.jsp";
+        List<Member> members = memberRepository.findAll();
+        httpRequest.setAttribute("members", members);
 
         return new MyView(viewPath);
     }
