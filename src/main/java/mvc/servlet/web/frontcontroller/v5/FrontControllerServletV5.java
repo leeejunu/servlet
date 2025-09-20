@@ -12,7 +12,11 @@ import mvc.servlet.web.frontcontroller.v3.controller.MemberFormControllerV3;
 import mvc.servlet.web.frontcontroller.v3.controller.MemberListControllerV3;
 import mvc.servlet.web.frontcontroller.v3.controller.MemberSaveControllerV3;
 import mvc.servlet.web.frontcontroller.v4.ControllerV4;
+import mvc.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
+import mvc.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
+import mvc.servlet.web.frontcontroller.v4.controller.MemberSaveControllerV4;
 import mvc.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdapter;
+import mvc.servlet.web.frontcontroller.v5.adapter.ControllerV4HandlerAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,10 +39,15 @@ public class FrontControllerServletV5 extends HttpServlet {
         handlerMappingMap.put("/front-controller/v5/v3/members/new-form", new MemberFormControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members/save", new MemberSaveControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members", new MemberListControllerV3());
+
+        handlerMappingMap.put("/front-controller/v5/v4/members/new-form", new MemberFormControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members/save", new MemberSaveControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members", new MemberListControllerV4());
     }
 
     private void initHandlerAdapters() {
         handlerAdapters.add(new ControllerV3HandlerAdapter());
+        handlerAdapters.add(new ControllerV4HandlerAdapter());
     }
 
     @Override
@@ -60,7 +69,6 @@ public class FrontControllerServletV5 extends HttpServlet {
     }
 
     private MyHandlerAdapter getHandlerAdapter(Object handler) {
-        MyHandlerAdapter a;
         for (MyHandlerAdapter adapter : handlerAdapters) {
             if (adapter.supports(handler)) {
                 return adapter;
